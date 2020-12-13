@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Student.belongsTo(models.Group, {
+        foreignKey: 'groupId',
+        onDelete: 'RESTRICT',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Student.init(
@@ -27,14 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           isEmail: true,
-        }
+        },
       },
       passwordHash: {
         type: DataTypes.TEXT,
         allowNull: false,
-        validate:{
-          isAlphanumeric:true,
-        }
       },
       birthday: {
         type: DataTypes.DATEONLY,
@@ -46,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-    }
+    },
     {
       sequelize,
       modelName: 'Student',
