@@ -77,16 +77,29 @@ const { sequelize, Student, Subject, Group } = require('./models');
     //update
     const updatedStudent = await Student.update(
       { lastName: 'NewTestovich' },
-      { where: { id: 1 } }
+      { where: { id: 2 } }
     );
-    console.log(updatedStudent);
 
     //delete
+    //truncate - delete all data from table
+    const deletedStudent = await Student.destroy({
+      where: { firstName: 'Test99' },
+    });
 
-    
+    //update all students with id from 10 to 20 (change groupId = 1)
 
+    const updatedStunentsGroup = await Student.update(
+      { groupId: 1 },
+      { where: { id: { [Op.between]: [10, 20] } } }
+    );
 
+    //delete students with id 1, 5, 9
 
+    const deletedStudents159 = await Student.destroy({
+      where: { id: { [Op.in]: [1, 5, 9] } },
+    });
+
+    console.log(deletedStudents159);
   } catch (err) {
     console.log('err:>>', err);
   }
