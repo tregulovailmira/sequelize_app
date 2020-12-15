@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',
       });
+      Student.belongsToMany(models.Subject, {
+        through: models.Student_Subject,
+        foreignKey: 'studentId',
+        otherKey: 'subjectId',
+      });
     }
   }
   Student.init(
